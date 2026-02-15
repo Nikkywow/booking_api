@@ -1,0 +1,47 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: booking-service
+  datasource:
+    url: jdbc:h2:mem:bookingdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          secret: ${JWT_SECRET:01234567890123456789012345678901}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+hotel:
+  service:
+    base-url: http://localhost:8082
+    timeout-ms: 1500
+    retries: 3
+    backoff-ms: 200
+    internal-key: ${INTERNAL_SERVICE_KEY:internal-secret-key}
+
+app:
+  jwt:
+    expiration-seconds: 3600
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
